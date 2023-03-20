@@ -5,6 +5,7 @@ import ListGroup from "./components/ListGroup";
 import { BsFillCalendar2Fill } from 'react-icons/bs';
 import Like from "./components/Like";
 import Message from "./Message";
+import produce from "immer";
 
 function App() {
   let items = ["Harare", "Bulawayo", "Hwange", "Victoria Falls", "Livingstone"];
@@ -57,6 +58,10 @@ const [bugs, setBugs] = useState([
 
    
    setBugs(bugs.map(bug => bug.id === 1 ? {...bug, fixed: true} : bug ))
+   setBugs(produce(draft =>{
+    const bug = draft.find(bug=> bug.id ===1);
+    if(bug) bug.fixed = true;
+   }))
 
   }
 
@@ -76,7 +81,7 @@ const [bugs, setBugs] = useState([
        {drink.price}
        {customer.address.zipCode}
        {tags}
-      {bugs[0].id}
+      {bugs.map(bug=> <p key={bug.id}>{bug.title} {bug.fixed? 'Fixed': 'New'}</p>)}
     </div>
   );
 }
