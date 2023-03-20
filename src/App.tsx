@@ -8,9 +8,31 @@ import Message from "./Message";
 
 function App() {
   let items = ["Harare", "Bulawayo", "Hwange", "Victoria Falls", "Livingstone"];
-
   const [alertVisile, setArlertVisibility] = useState(false);
   const [isVisible, setVisibility]= useState(false)
+  const [drink, setDrink] = useState({
+    title: 'Americano',
+    price: 5,
+  })
+  const [customer, setCustomer] = useState(
+    {
+      name: 'Novuyo',
+      address:{
+        city: 'Ranburg Johannesburg',
+        zipCode: 2194,
+      }
+    }
+  )
+
+  const [tags, setTags] = useState(['happy', 'cheerful']);
+
+const [bugs, setBugs] = useState([
+  {id: 1, title: 'Bug 1', fixed: false},
+  {id: 2, title: 'Bug 2', fixed: false},
+]);
+
+
+
 
 
   const handleSelectItem = (item: string) => {
@@ -18,8 +40,23 @@ function App() {
   };
 
   const handleClick= () => {
-    setVisibility(true);
-    console.log(isVisible)
+   const newDrink = {
+    ...drink,
+    price: 9,
+   } 
+   drink.price =6;
+   setDrink({...drink, price: 20});
+   setCustomer({...customer, address:{...customer.address, zipCode:2195}})
+
+   //Add
+   setTags([...tags,'exciting'])
+   //Remove
+   setTags(tags.filter(tag => tag !== 'happy'));
+   //Update
+   setTags(tags.map(tag => tag === 'happy' ? 'happiness': tag))
+
+   
+   setBugs(bugs.map(bug => bug.id === 1 ? {...bug, fixed: true} : bug ))
 
   }
 
@@ -36,9 +73,10 @@ function App() {
       <Button color= 'secondary' onClick={handleClick}>My Button</Button>
       <BsFillCalendar2Fill color="red" size={40}/>
       <Like onClick={()=> console.log('clicked')}/>
-      <Message />
-      <Message />
-      <Message />
+       {drink.price}
+       {customer.address.zipCode}
+       {tags}
+      {bugs[0].id}
     </div>
   );
 }
